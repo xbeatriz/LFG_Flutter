@@ -27,19 +27,19 @@ class _HomeScreenState extends State<HomeScreen> {
         destinations: const <Widget>[
           NavigationDestination(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Events',
           ),
           NavigationDestination(
-            icon: Icon(Icons.draw),
-            label: 'Explore',
+            icon: Icon(Icons.event_note_rounded),
+            label: 'Create Event',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.add_task_rounded),
+            label: 'Profile',
           ),
           NavigationDestination(
             icon: Icon(Icons.person),
             label: 'Profile',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_rounded),
-            label: 'Settings',
           ),
         ],
         onDestinationSelected: (int index) {

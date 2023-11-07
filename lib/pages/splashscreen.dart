@@ -41,7 +41,12 @@ class _SplashScreenState extends State<SplashScreen>
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const [
+            Icon(
+              Icons.sports_esports_rounded,
+              size: 80,
+              color: Colors.white,
+            ),
             SizedBox(
               height: 20,
             ),
