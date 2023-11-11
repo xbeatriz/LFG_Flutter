@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto/pages/addEvent.dart';
-import 'package:projeto/pages/favoriteEvent.dart';
+import 'package:projeto/pages/myEvent.dart';
 import 'package:projeto/pages/home.dart';
 import 'package:projeto/pages/profile.dart';
 
