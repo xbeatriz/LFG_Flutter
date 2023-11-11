@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto/pages/addEvent.dart';
 
 class HomeScreen extends StatefulWidget {
   final String title;
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
         destinations: const <Widget>[
           NavigationDestination(
             icon: Icon(Icons.home),
-            label: 'Events',
+            label: 'Home',
           ),
           NavigationDestination(
             icon: Icon(Icons.event_note_rounded),
@@ -35,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           NavigationDestination(
             icon: Icon(Icons.add_task_rounded),
-            label: 'Profile',
+            label: 'My Events',
           ),
           NavigationDestination(
             icon: Icon(Icons.person),
@@ -65,11 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
           alignment: Alignment.center,
           child: const Text('Orange!'),
         ),
-        Container(
-          color: Colors.pink,
-          alignment: Alignment.center,
-          child: const Text('Pink'),
-        ),
+        AddEvent(),
         Container(
           color: Colors.purple,
           alignment: Alignment.center,
