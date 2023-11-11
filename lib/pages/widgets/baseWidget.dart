@@ -5,7 +5,7 @@ import 'package:projeto/pages/home.dart';
 import 'package:projeto/pages/profile.dart';
 
 class BaseWidget extends StatefulWidget {
-  const BaseWidget({super.key});
+  const BaseWidget({Key? key}) : super(key: key);
 
   @override
   State<BaseWidget> createState() => _BaseWidgetState();
@@ -17,8 +17,9 @@ class _BaseWidgetState extends State<BaseWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      // NavigationBar Example
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       bottomNavigationBar: NavigationBar(
         animationDuration: const Duration(milliseconds: 300),
         destinations: const <Widget>[
@@ -48,11 +49,9 @@ class _BaseWidgetState extends State<BaseWidget> {
           });
         },
         selectedIndex: currentPageIndex,
+        indicatorColor: Colors.blue[800],
         backgroundColor: Color(0xFF000B45),
-        //elevation: 10,
-        //surfaceTintColor: Colors.lime,
-        //height: 20,
-        //labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
       ),
       body: [HomeScreen(), MyEvents(), AddEvent(), Profile()][currentPageIndex],
     );

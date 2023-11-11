@@ -1,17 +1,188 @@
 import 'package:flutter/material.dart';
+import 'package:projeto/pages/widgets/baseWidget.dart';
+import 'package:projeto/pages/login.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  _SignUpState createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
+  bool _obscurePassword = true; // Flag para indicar se a senha está obscurecida
+  TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("SIGN IN PAGE"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sign Up'),
+        backgroundColor: Color(0xFF000B45),
+        elevation: 8.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20.0),
+            bottomRight: Radius.circular(20.0),
+          ),
+        ),
+        automaticallyImplyLeading: false,
+      ),
+      backgroundColor: Color.fromARGB(255, 33, 52, 148),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                labelText: 'Email',
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0xFF000B45),
+                  ),
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                  ),
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                labelText: 'Username',
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0xFF000B45),
+                  ),
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                  ),
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              style: TextStyle(color: Colors.white),
+              obscureText: _obscurePassword,
+              controller: _passwordController,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                labelStyle: TextStyle(color: Colors.white),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color(0xFF000B45),
+                  ),
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                  ),
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscurePassword = !_obscurePassword;
+                    });
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 44.0),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BaseWidget()),
+                );
+                // Implement your SignUp logic here
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF000B45),
+                foregroundColor: Colors.white,
+                elevation: 4.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+              ),
+              child: Container(
+                height: 36,
+                width: double.infinity,
+                alignment: Alignment.center,
+                child: Text('Sign Up'),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            OutlinedButton.icon(
+              onPressed: () {
+                // Implement Google sign-up logic here
+              },
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.white),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+              ),
+              icon: Icon(Icons.g_translate, color: Colors.white),
+              label: Text(
+                'Sign up with Google',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Already have an account?',
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(height: 16.0),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LogIn()),
+                );
+              },
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Color(0xFF000B45), width: 1.5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                backgroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+              ),
+              child: Container(
+                height: 36,
+                width: double.infinity,
+                alignment: Alignment.center,
+                child: Text(
+                  'Log In',
+                  style: TextStyle(color: Color(0xFF000B45)),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
