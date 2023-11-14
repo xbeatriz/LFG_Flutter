@@ -20,41 +20,60 @@ class _BaseWidgetState extends State<BaseWidget> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
       ),
-      bottomNavigationBar: NavigationBar(
-        animationDuration: const Duration(milliseconds: 300),
-        destinations: const <Widget>[
-          NavigationDestination(
-            icon: Icon(Icons.home, color: Colors.white),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.gamepad_rounded, color: Colors.white),
-            label: 'My Events',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.add, color: Colors.white),
-            label: 'Add Events',
-          ),
-          NavigationDestination(
-            icon: Icon(
-              Icons.person,
+      body: [HomeScreen(), MyEvents(), AddEvent(), Profile()][currentPageIndex],
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Color(0xFF000B45),
+        ),
+        child: BottomNavigationBar(
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: currentPageIndex,
+          onTap: (index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: buildIconWithCircle(Icons.home, currentPageIndex == 0),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: buildIconWithCircle(
+                  Icons.gamepad_rounded, currentPageIndex == 1),
+              label: 'My Events',
+            ),
+            BottomNavigationBarItem(
+              icon: buildIconWithCircle(Icons.add, currentPageIndex == 2),
+              label: 'Add Events',
+            ),
+            BottomNavigationBarItem(
+              icon: buildIconWithCircle(Icons.person, currentPageIndex == 3),
+              label: 'Profile',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildIconWithCircle(IconData icon, bool isSelected) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        if (isSelected)
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
               color: Colors.white,
             ),
-            label: 'Profile',
           ),
-        ],
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        selectedIndex: currentPageIndex,
-        
-        indicatorColor: Colors.blue[800],
-        backgroundColor: Color(0xFF000B45),
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-      ),
-      body: [HomeScreen(), MyEvents(), AddEvent(), Profile()][currentPageIndex],
+        Icon(icon, color: isSelected ? Color(0XFF000B45) : Colors.white),
+      ],
     );
   }
 }
