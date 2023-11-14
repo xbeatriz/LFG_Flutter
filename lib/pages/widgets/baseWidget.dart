@@ -49,6 +49,7 @@ class _BaseWidgetState extends State<BaseWidget> {
           });
         },
         selectedIndex: currentPageIndex,
+        
         indicatorColor: Colors.blue[800],
         backgroundColor: Color(0xFF000B45),
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
