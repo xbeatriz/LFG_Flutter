@@ -17,9 +17,6 @@ class _BaseWidgetState extends State<BaseWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
       body: [HomeScreen(), MyEvents(), AddEvent(), Profile()][currentPageIndex],
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
