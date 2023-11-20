@@ -14,13 +14,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text("Home"),
         backgroundColor: Color(0xFF000B45),
         automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [
           Container(
-            height: 36,
+            height: 50,
             width: 380,
             margin: EdgeInsets.all(8.0),
             padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Row(
               children: [
-                Icon(Icons.search, color: Colors.grey),
+                Icon(Icons.search, color: const Color.fromARGB(255, 0, 0, 0)),
                 SizedBox(width: 8.0),
                 Expanded(
                   child: TextField(

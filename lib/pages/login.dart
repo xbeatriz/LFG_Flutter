@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:projeto/pages/widgets/baseWidget.dart';
 import 'package:projeto/pages/signup.dart';
 
@@ -16,6 +17,7 @@ class _LogInState extends State<LogIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -139,22 +141,25 @@ class _LogInState extends State<LogIn> {
                 ),
               ),
               SizedBox(height: 16.0),
-              OutlinedButton.icon(
-                onPressed: () {
-                  // Implement Google login logic here
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Colors.white),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Log In with Google',
+                    style: TextStyle(color: Colors.white),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                ),
-                icon: Icon(Icons.g_translate, color: Colors.white),
-                label: Text(
-                  'Sign in with Google',
-                  style: TextStyle(color: Colors.white),
-                ),
+                  SizedBox(height: 16.0),
+                  GestureDetector(
+                    onTap: () {
+                      // Adicione a lógica de login do Google aqui
+                    },
+                    child: SvgPicture.asset(
+                      'assets/icons/google.svg',
+                      width: 24,
+                      height: 24,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 16.0),
               Text(
