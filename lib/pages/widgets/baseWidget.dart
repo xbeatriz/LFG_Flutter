@@ -62,10 +62,11 @@ class _BaseWidgetState extends State<BaseWidget> {
       children: [
         if (isSelected)
           Container(
-            width: 50,
-            height: 50,
+            width: 40,
+            height: 40,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
+              borderRadius: BorderRadius.all(Radius.circular(16.0)),
+              shape: BoxShape.rectangle,
               color: Colors.white,
             ),
           ),

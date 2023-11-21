@@ -26,11 +26,11 @@ class _ProfileState extends State<Profile> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Imagem do usuário (pode ser uma foto de perfil)
             CircleAvatar(
-              radius: 50.0,
+              radius: 60.0,
               backgroundImage: NetworkImage(
                   'https://via.placeholder.com/150'), // Substitua pela URL da imagem do usuário
             ),
