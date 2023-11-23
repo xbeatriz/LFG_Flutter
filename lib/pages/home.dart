@@ -66,8 +66,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 margin: EdgeInsets.symmetric(horizontal: 16.0),
                 padding: EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Color(0xFF4682B4),
+                  color: Color(0xFF000B45),
                   borderRadius: BorderRadius.circular(16.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromARGB(255, 0, 0, 0)
+                          .withOpacity(0.2), // Cor da sombra
+                      spreadRadius: 5, // Raio de propagação da sombra
+                      blurRadius: 2, // Raio de desfoque da sombra
+                      offset: Offset(
+                          0, 3), // Deslocamento da sombra em relação ao widget
+                    ),
+                  ],
                 ),
                 child: Row(
                   children: [
@@ -185,7 +195,7 @@ class Dialogs extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: Color(0xFF4682B4),
+                color: Color(0xFF000B45),
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: Column(
