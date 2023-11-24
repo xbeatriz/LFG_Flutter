@@ -9,7 +9,7 @@ class MyEvents extends StatefulWidget {
 
 class _MyEventsState extends State<MyEvents> {
   String selectedCategory =
-      'Os Meus Eventos'; // Inicialmente, 'Os Meus Eventos'
+      'Os Meus Eventos'; //Seleciona automaticamente a categoria dos meus eventos
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _MyEventsState extends State<MyEvents> {
             height: 47,
             width: 390,
             decoration: BoxDecoration(
-              color: Colors.grey, // Cor de fundo do contêiner
+              color: Colors.grey,
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: Row(
@@ -34,7 +34,7 @@ class _MyEventsState extends State<MyEvents> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      // Define a categoria selecionada como "Os Meus Eventos"
+                      // !categoria selecionada como "Os Meus Eventos"
                       setState(() {
                         selectedCategory = 'Os Meus Eventos';
                       });
@@ -64,7 +64,7 @@ class _MyEventsState extends State<MyEvents> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      // Define a categoria selecionada como "Favoritos"
+                      //! Categoria selecionada como "Favoritos"
                       setState(() {
                         selectedCategory = 'Favoritos';
                       });
@@ -94,9 +94,7 @@ class _MyEventsState extends State<MyEvents> {
               ],
             ),
           ),
-          // Adicione o restante do conteúdo aqui, dependendo da categoria selecionada
-          // (Os Meus Eventos ou Favoritos)
-          // Neste exemplo, vou exibir uma ListView.builder simples com mensagens fictícias.
+          //?DADOS INVENTADOS
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

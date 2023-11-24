@@ -27,16 +27,17 @@ class _ProfileState extends State<Profile> {
   TextEditingController discordController = TextEditingController();
   TextEditingController ageController = TextEditingController();
 
-  // Função para abrir a câmera e selecionar uma imagem
+  //! Função para abrir a câmera e selecionar uma imagem (ImagePicker)
+  //! NÃO FUNCIONA
   Future<void> _pickImage() async {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
-      // Atualize a imagem com a nova seleção
+      //Atualizar a imagem
       setState(() {
-        // Aqui você deve salvar a imagem no local adequado
-        // e atribuir a nova URL da imagem à variável que está sendo usada para exibi-la
+        // salvar a imagem no local (base de dados)
+        // e atribuir o novo URL da imagem à variável que está sendo usada para exibi-la
         // imageUrl = pickedFile.path;
       });
     }
@@ -53,7 +54,7 @@ class _ProfileState extends State<Profile> {
               leading: Icon(Icons.edit),
               title: Text('Editar Perfil'),
               onTap: () {
-                // Adicione a lógica para editar o perfil aqui
+                //! Adicionar a lógica para editar o perfil aqui
                 Navigator.pop(context);
               },
             ),
@@ -61,19 +62,21 @@ class _ProfileState extends State<Profile> {
               leading: Icon(Icons.security),
               title: Text('Configurações de Privacidade'),
               onTap: () {
-                // Adicione a lógica para configurar a privacidade aqui
+                //! Adicionar a lógica para configurar a privacidade aqui
                 Navigator.pop(context);
               },
             ),
+            //!LOG OUT
+            //!NÃO FUNCIONA
             ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text('Log Out'),
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.pop(
                   context,
                   MaterialPageRoute(builder: (context) => SplashScreen()),
                 );
-                // Fecha o menu inferior
+                //! Fecha o menu inferior
                 Navigator.pop(context);
               },
             ),
@@ -83,6 +86,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+//! Editar dados
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +117,6 @@ class _ProfileState extends State<Profile> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Imagem do usuário (pode ser uma foto de perfil)
             GestureDetector(
               onTap: isEditing ? _pickImage : null,
               child: Container(
@@ -123,7 +126,7 @@ class _ProfileState extends State<Profile> {
                   borderRadius: BorderRadius.circular(8.0),
                   image: DecorationImage(
                     image: NetworkImage(
-                        'https://via.placeholder.com/150'), // Substitua pela URL da imagem do usuário
+                        'https://via.placeholder.com/150'), // Substitua pela URL da imagem do USER
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -131,7 +134,7 @@ class _ProfileState extends State<Profile> {
             ),
             SizedBox(height: 16.0),
 
-            // Nome do usuário e Age do user
+            // Nome do user e Age do user
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -165,14 +168,14 @@ class _ProfileState extends State<Profile> {
               height: 8.0,
             ),
 
-            // Email do usuário
+            // Email do user //!(não está editável, mas quero colocar)
             Text(
               'Email: $userEmail',
               style: TextStyle(fontSize: 16.0),
             ),
             SizedBox(height: 8.0),
 
-            // Descrição do usuário (editável)
+            // Descrição do user (editável)
             isEditing
                 ? TextFormField(
                     controller: bioController,

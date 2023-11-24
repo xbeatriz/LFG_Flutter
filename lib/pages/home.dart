@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
       pageBuilder: (context, animation1, animation2) {
         return Container();
       },
-      //ANIMAÇÃO
+      //!ANIMAÇÃO
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         var tween = Tween(begin: 0.0, end: 1.0);
         var scaleAnimation = animation.drive(tween);

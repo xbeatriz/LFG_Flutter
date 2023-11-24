@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:projeto/pages/myEvent.dart';
+import 'package:projeto/pages/widgets/inputText.dart';
 
 class AddEvent extends StatefulWidget {
   const AddEvent({Key? key}) : super(key: key);
@@ -20,11 +22,15 @@ class _AddEventState extends State<AddEvent> {
   List<String> games = ['Jogo 1', 'Jogo 2', 'Jogo 3'];
   String selectedGame = 'Jogo 1';
 
+  String getDate() {
+    return DateFormat("dd-MM-yyyy").format(selectedDate);
+  }
+
   // Data e hora selecionadas
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
 
-  // Função para exibir o seletor de data
+  // Função para exibir o botão de data
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -47,7 +53,7 @@ class _AddEventState extends State<AddEvent> {
     }
   }
 
-  // Função para exibir o seletor de hora
+  // Função para exibir o botão de hora
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked =
         await showTimePicker(context: context, initialTime: selectedTime);
@@ -81,52 +87,13 @@ class _AddEventState extends State<AddEvent> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Nome do Evento",
-                style: TextStyle(
-                  fontSize:
-                      18.0, // Altere o tamanho do texto conforme necessário
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 4.0,
-              ),
-              TextFormField(
-                controller: eventNameController,
-                decoration: InputDecoration(
-                  // labelText: 'Nome do Evento',
-                  floatingLabelBehavior: FloatingLabelBehavior
-                      .always, // Mostrar rótulo acima do campo
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-              ),
+              InputText(
+                  text: "Nome do Evento", controller: eventNameController),
               SizedBox(height: 16.0),
               Text(
                 "Jogo",
                 style: TextStyle(
-                  fontSize:
-                      18.0, // Altere o tamanho do texto conforme necessário
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -146,7 +113,7 @@ class _AddEventState extends State<AddEvent> {
                 }).toList(),
                 decoration: InputDecoration(
                   // labelText: 'Jogo',
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  // floatingLabelBehavior: FloatingLabelBehavior.always,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(
@@ -174,8 +141,7 @@ class _AddEventState extends State<AddEvent> {
               Text(
                 "Nome do Utilizador",
                 style: TextStyle(
-                  fontSize:
-                      18.0, // Altere o tamanho do texto conforme necessário
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -186,8 +152,8 @@ class _AddEventState extends State<AddEvent> {
                 controller: userNameController,
                 decoration: InputDecoration(
                   // labelText: 'Nome do Evento',
-                  floatingLabelBehavior: FloatingLabelBehavior
-                      .always, // Mostrar rótulo acima do campo
+                  // floatingLabelBehavior: FloatingLabelBehavior
+                  //     .always, // Mostrar rótulo acima do campo
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(
@@ -215,8 +181,7 @@ class _AddEventState extends State<AddEvent> {
               Text(
                 "Date",
                 style: TextStyle(
-                  fontSize:
-                      18.0, // Altere o tamanho do texto conforme necessário
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -243,7 +208,7 @@ class _AddEventState extends State<AddEvent> {
                   SizedBox(width: 16.0),
                   Expanded(
                     child: Text(
-                      'Data: ${selectedDate.toLocal()}',
+                      'Data: ${getDate()}',
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -253,8 +218,7 @@ class _AddEventState extends State<AddEvent> {
               Text(
                 "Hora",
                 style: TextStyle(
-                  fontSize:
-                      18.0, // Altere o tamanho do texto conforme necessário
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -291,8 +255,7 @@ class _AddEventState extends State<AddEvent> {
               Text(
                 "Age Limit",
                 style: TextStyle(
-                  fontSize:
-                      18.0, // Altere o tamanho do texto conforme necessário
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -303,8 +266,8 @@ class _AddEventState extends State<AddEvent> {
                 controller: ageLimitController,
                 decoration: InputDecoration(
                   // labelText: 'Nome do Evento',
-                  floatingLabelBehavior: FloatingLabelBehavior
-                      .always, // Mostrar rótulo acima do campo
+                  // floatingLabelBehavior: FloatingLabelBehavior
+                  //     .always, // Mostrar rótulo acima do campo
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(
@@ -332,8 +295,7 @@ class _AddEventState extends State<AddEvent> {
               Text(
                 "Local",
                 style: TextStyle(
-                  fontSize:
-                      18.0, // Altere o tamanho do texto conforme necessário
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -344,8 +306,8 @@ class _AddEventState extends State<AddEvent> {
                 controller: localController,
                 decoration: InputDecoration(
                   // labelText: 'Nome do Evento',
-                  floatingLabelBehavior: FloatingLabelBehavior
-                      .always, // Mostrar rótulo acima do campo
+                  // floatingLabelBehavior: FloatingLabelBehavior
+                  //     .always, // Mostrar rótulo acima do campo
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(
@@ -373,8 +335,7 @@ class _AddEventState extends State<AddEvent> {
               Text(
                 "Descrição",
                 style: TextStyle(
-                  fontSize:
-                      18.0, // Altere o tamanho do texto conforme necessário
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -386,7 +347,7 @@ class _AddEventState extends State<AddEvent> {
                 maxLines: 3,
                 decoration: InputDecoration(
                   //labelText: 'Descrição',
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  // floatingLabelBehavior: FloatingLabelBehavior.always,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(
@@ -415,10 +376,10 @@ class _AddEventState extends State<AddEvent> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MyEvents()),
+                    MaterialPageRoute(
+                        builder: (context) => MyEvents()), //!Não funciona
                   );
-                  // Lógica para salvar os dados
-                  print('Dados Salvos!');
+                  //! Lógica para salvar os dados
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF000B45),

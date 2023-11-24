@@ -11,7 +11,7 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
-  bool _obscurePassword = true; // Flag para indicar se a senha está obscurecida
+  bool _obscurePassword = true; //Icon para indicar se a senha está obscurecida
   TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -104,7 +104,7 @@ class _LogInState extends State<LogIn> {
                 alignment: Alignment.centerLeft,
                 child: GestureDetector(
                   onTap: () {
-                    // Implementar a navegação para o link externo de redefinição de senha
+                    //! Implementar a navegação para o link externo de redefinição de senha
                   },
                   child: Text(
                     "Don't remember?",
@@ -115,12 +115,12 @@ class _LogInState extends State<LogIn> {
                   ),
                 ),
               ),
-              SizedBox(
-                  height: 36.0), // Ajustar o espaçamento conforme necessário
+              SizedBox(height: 36.0),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
+                    //! Lógica do LogIn aqui
                     MaterialPageRoute(builder: (context) => BaseWidget()),
                   );
                 },
@@ -151,7 +151,7 @@ class _LogInState extends State<LogIn> {
                   SizedBox(height: 16.0),
                   GestureDetector(
                     onTap: () {
-                      // Adicione a lógica de login do Google aqui
+                      //! Adicionar a lógica de login do Google aqui
                     },
                     child: SvgPicture.asset(
                       'assets/icons/google.svg',
