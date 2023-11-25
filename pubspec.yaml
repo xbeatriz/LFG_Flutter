@@ -33,6 +33,7 @@ dependencies:
   flutter_svg: ^2.0.9
   image_picker: ^1.0.4
   intl: ^0.18.1
+  geolocator: ^10.1.0
 
 
 
