@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:projeto/pages/myEvent.dart';
+import 'package:projeto/pages/widgets/dropdownInput.dart';
 import 'package:projeto/pages/widgets/inputText.dart';
 
 class AddEvent extends StatefulWidget {
@@ -90,93 +91,12 @@ class _AddEventState extends State<AddEvent> {
               InputText(
                   text: "Nome do Evento", controller: eventNameController),
               SizedBox(height: 16.0),
-              Text(
-                "Jogo",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 8),
-              DropdownButtonFormField<String>(
-                value: selectedGame,
-                onChanged: (value) {
-                  setState(() {
-                    selectedGame = value!;
-                  });
-                },
-                items: games.map((game) {
-                  return DropdownMenuItem<String>(
-                    value: game,
-                    child: Text(game),
-                  );
-                }).toList(),
-                decoration: InputDecoration(
-                  // labelText: 'Jogo',
-                  // floatingLabelBehavior: FloatingLabelBehavior.always,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                ),
+              DropdownInput(
+                text: "Jogo",
+                selectedGame: selectedGame,
               ),
               SizedBox(height: 16.0),
-              Text(
-                "Nome do Utilizador",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 4.0,
-              ),
-              TextFormField(
-                controller: userNameController,
-                decoration: InputDecoration(
-                  // labelText: 'Nome do Evento',
-                  // floatingLabelBehavior: FloatingLabelBehavior
-                  //     .always, // Mostrar rótulo acima do campo
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-              ),
+              InputText(text: "UserName", controller: userNameController),
               SizedBox(height: 16.0),
               Text(
                 "Date",
@@ -252,124 +172,14 @@ class _AddEventState extends State<AddEvent> {
                 ],
               ),
               SizedBox(height: 16.0),
-              Text(
-                "Age Limit",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 4.0,
-              ),
-              TextFormField(
-                controller: ageLimitController,
-                decoration: InputDecoration(
-                  // labelText: 'Nome do Evento',
-                  // floatingLabelBehavior: FloatingLabelBehavior
-                  //     .always, // Mostrar rótulo acima do campo
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-              ),
+              InputText(text: "Age Limit", controller: ageLimitController),
               SizedBox(height: 16.0),
-              Text(
-                "Local",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 4.0,
-              ),
-              TextFormField(
-                controller: localController,
-                decoration: InputDecoration(
-                  // labelText: 'Nome do Evento',
-                  // floatingLabelBehavior: FloatingLabelBehavior
-                  //     .always, // Mostrar rótulo acima do campo
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-              ),
+              InputText(text: "Local", controller: localController),
               SizedBox(height: 16.0),
-              Text(
-                "Descrição",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 4.0,
-              ),
-              TextFormField(
+              InputText(
+                text: "Descrição",
                 controller: descriptionController,
                 maxLines: 3,
-                decoration: InputDecoration(
-                  //labelText: 'Descrição',
-                  // floatingLabelBehavior: FloatingLabelBehavior.always,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(
-                      color: Color(0xFF000B45),
-                      width: 2.0,
-                    ),
-                  ),
-                ),
               ),
               SizedBox(height: 16.0),
               ElevatedButton(

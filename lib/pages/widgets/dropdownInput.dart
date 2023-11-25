@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 
-class InputText extends StatelessWidget {
+class DropdownInput extends StatefulWidget {
   final String text;
-  final TextEditingController controller;
-  final int? maxLines; // Adicionado para suportar maxLines
+  final String selectedGame;
 
-  InputText(
-      {Key? key, required this.text, required this.controller, this.maxLines})
+  DropdownInput({Key? key, required this.text, required this.selectedGame})
       : super(key: key);
+
+  @override
+  _DropdownInputState createState() => _DropdownInputState();
+}
+
+class _DropdownInputState extends State<DropdownInput> {
+  // Valores para o dropdown de jogos
+  List<String> games = ['Jogo 1', 'Jogo 2', 'Jogo 3'];
+  late String selectedGame;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedGame = widget.selectedGame;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,21 +28,29 @@ class InputText extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          text,
+          widget.text,
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(
-          height: 4.0,
-        ),
-        TextFormField(
-          maxLines:
-              maxLines, // Usando o maxLines fornecido ou nulo se não for fornecido
-          controller: controller,
+        SizedBox(height: 8),
+        DropdownButtonFormField<String>(
+          value: selectedGame,
+          onChanged: (value) {
+            setState(() {
+              selectedGame = value!;
+            });
+          },
+          items: games.map((game) {
+            return DropdownMenuItem<String>(
+              value: game,
+              child: Text(game),
+            );
+          }).toList(),
           decoration: InputDecoration(
-            // labelText: 'Nome do Evento',
+            // labelText: 'Jogo',
+            // floatingLabelBehavior: FloatingLabelBehavior.always,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
               borderSide: BorderSide(
