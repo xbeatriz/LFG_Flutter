@@ -1,53 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class DateTimePicker extends StatelessWidget {
+class TimePicker extends StatelessWidget {
   final String text;
-  final DateTime initialDateTime;
-  final Function(DateTime) onDateTimeSelected;
+  final TimeOfDay initialTime;
+  final Function(TimeOfDay) onTimeSelected;
 
-  DateTimePicker({
+  TimePicker({
     Key? key,
     required this.text,
-    required this.initialDateTime,
-    required this.onDateTimeSelected,
+    required this.initialTime,
+    required this.onTimeSelected,
   }) : super(key: key);
 
-  String getDate() {
-    return DateFormat("dd-MM-yyyy").format(initialDateTime);
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: initialDateTime,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-
-    if (picked != null && picked != initialDateTime) {
-      onDateTimeSelected(DateTime(
-        picked.year,
-        picked.month,
-        picked.day,
-        initialDateTime.hour,
-        initialDateTime.minute,
-      ));
-    }
+  String getTime() {
+    return '${initialTime.hour}:${initialTime.minute}';
   }
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
-        context: context, initialTime: TimeOfDay.fromDateTime(initialDateTime));
+      context: context,
+      initialTime: initialTime,
+    );
 
-    if (picked != null) {
-      onDateTimeSelected(DateTime(
-        initialDateTime.year,
-        initialDateTime.month,
-        initialDateTime.day,
-        picked.hour,
-        picked.minute,
-      ));
+    if (picked != null && picked != initialTime) {
+      onTimeSelected(picked);
     }
   }
 
@@ -63,10 +39,11 @@ class DateTimePicker extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        SizedBox(height: 4.0),
         Row(
           children: [
             ElevatedButton(
-              onPressed: () => _selectDate(context),
+              onPressed: () => _selectTime(context),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF000B45),
                 shape: RoundedRectangleBorder(
@@ -78,12 +55,12 @@ class DateTimePicker extends StatelessWidget {
                 ),
                 minimumSize: Size(150.0, 0),
               ),
-              child: Text('Selecionar Data'),
+              child: Text('Selecionar Hora'),
             ),
             SizedBox(width: 16.0),
             Expanded(
               child: Text(
-                'Data: ${getDate()}',
+                'Hora: ${getTime()}',
                 overflow: TextOverflow.ellipsis,
               ),
             ),
