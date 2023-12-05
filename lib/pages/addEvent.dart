@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:projeto/pages/myEvent.dart';
 import 'package:projeto/pages/widgets/dropdownInput.dart';
 import 'package:projeto/pages/widgets/inputText.dart';
@@ -20,7 +20,7 @@ class _AddEventState extends State<AddEvent> {
   TextEditingController ageLimitController = TextEditingController();
   TextEditingController localController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  LatLng? selectedLocation;
+  // LatLng? selectedLocation;
 
   // Valores para o dropdown de jogos
   List<String> games = ['Jogo 1', 'Jogo 2', 'Jogo 3'];
