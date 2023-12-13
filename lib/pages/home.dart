@@ -61,8 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 _showEventDetails(context);
               },
               child: Container(
-                height: 120,
-                width: 380,
+                height: 130,
+                //width: 380,
                 margin: EdgeInsets.symmetric(horizontal: 16.0),
                 padding: EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
