@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto/pages/widgets/eventCard.dart';
 
 class MyEvents extends StatefulWidget {
   const MyEvents({Key? key}) : super(key: key);
@@ -8,8 +9,24 @@ class MyEvents extends StatefulWidget {
 }
 
 class _MyEventsState extends State<MyEvents> {
-  String selectedCategory =
-      'Os Meus Eventos'; //Seleciona automaticamente a categoria dos meus eventos
+  String selectedCategory = 'Favorites';
+
+  // Lista fictícia de eventos (substitua por seus dados reais)
+  List<EventData> events = [
+    EventData(
+      imageUrl: 'assets/images/Valorant.png',
+      eventTitle: 'TÍTULO DO EVENTO 1',
+      userName: 'NOME DO USUÁRIO 1',
+      dateAndTime: 'DATA E HORA 1',
+    ),
+    EventData(
+      imageUrl: 'assets/images/Valorant.png',
+      eventTitle: 'TÍTULO DO EVENTO 2',
+      userName: 'NOME DO USUÁRIO 2',
+      dateAndTime: 'DATA E HORA 2',
+    ),
+    // Adicione mais eventos conforme necessário
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +53,13 @@ class _MyEventsState extends State<MyEvents> {
                     onTap: () {
                       // !categoria selecionada como "Os Meus Eventos"
                       setState(() {
-                        selectedCategory = 'Os Meus Eventos';
+                        selectedCategory = 'Favorites';
                       });
                     },
                     child: Container(
                       height: double.infinity,
                       decoration: BoxDecoration(
-                        color: selectedCategory == 'Os Meus Eventos'
+                        color: selectedCategory == 'Favorites'
                             ? Color(0xFF000B45)
                             : Colors.transparent,
                         borderRadius: BorderRadius.only(
@@ -52,7 +69,7 @@ class _MyEventsState extends State<MyEvents> {
                       ),
                       child: Center(
                         child: Text(
-                          "Os Meus Eventos",
+                          "Favorites",
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -66,13 +83,13 @@ class _MyEventsState extends State<MyEvents> {
                     onTap: () {
                       //! Categoria selecionada como "Favoritos"
                       setState(() {
-                        selectedCategory = 'Favoritos';
+                        selectedCategory = 'Subscribed';
                       });
                     },
                     child: Container(
                       height: double.infinity,
                       decoration: BoxDecoration(
-                        color: selectedCategory == 'Favoritos'
+                        color: selectedCategory == 'Subscribed'
                             ? Color(0xFF000B45)
                             : Colors.transparent,
                         borderRadius: BorderRadius.only(
@@ -82,7 +99,7 @@ class _MyEventsState extends State<MyEvents> {
                       ),
                       child: Center(
                         child: Text(
-                          "Favoritos",
+                          'Subscribed',
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -94,35 +111,51 @@ class _MyEventsState extends State<MyEvents> {
               ],
             ),
           ),
-          //?DADOS INVENTADOS
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Informações sobre ${selectedCategory}:",
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8.0),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                        "${selectedCategory} - Item ${index + 1}",
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+          //? DADOS DE EVENTOS
+          SizedBox(
+            height: 8.0,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: events.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: EventCard(
+                      imageUrl: events[index].imageUrl,
+                      eventTitle: events[index].eventTitle,
+                      userName: events[index].userName,
+                      dateAndTime: events[index].dateAndTime,
+                      discordAccount: '',
+                      gameName: '',
+                      ageLimit: '',
+                      description: '',
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),
     );
   }
+}
+
+// Classe de dados do evento
+class EventData {
+  final String imageUrl;
+  final String eventTitle;
+  final String userName;
+  final String dateAndTime;
+
+  EventData({
+    required this.imageUrl,
+    required this.eventTitle,
+    required this.userName,
+    required this.dateAndTime,
+  });
 }

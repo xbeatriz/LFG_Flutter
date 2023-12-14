@@ -69,6 +69,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icons/
+    - assets/images/Valorant.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -82,20 +83,11 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Kanit
+    - family: Montserrat
       fonts:
-        - asset: fonts/Kanit-Black.ttf
-        - asset: fonts/Kanit-Bold.ttf
-        - asset: fonts/Kanit-ExtraBold.ttf
-        - asset: fonts/Kanit-ExtraLight.ttf
-        - asset: fonts/Kanit-Light.ttf
-        - asset: fonts/Kanit-Medium.ttf
-        - asset: fonts/Kanit-Regular.ttf
-        - asset: fonts/Kanit-SemiBold.ttf
+        - asset: fonts/Montserrat-Regular.ttf
+        - asset: fonts/Montserrat-SemiBold.ttf
 
-    - family: Debug
-      fonts:
-        - asset: fonts/Debug.otf
         
   #
   # For details regarding fonts from package dependencies,
