@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:projeto/pages/widgets/baseWidget.dart';
+
 import 'package:projeto/pages/signup.dart';
+import 'package:projeto/pages/widgets/baseWidget.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
