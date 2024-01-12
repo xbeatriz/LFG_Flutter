@@ -82,7 +82,7 @@ class MiniEventCard extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white,
-                  onPrimary: Colors.blue, // Cor do texto
+                  onPrimary: Color(0xFF000B45), // Cor do texto
                   side: BorderSide(color: Colors.blue), // Borda azul
                 ),
                 child: Text(

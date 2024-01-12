@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto/pages/editProfile.dart';
 import 'package:projeto/pages/splashscreen.dart';
 import 'package:projeto/pages/widgets/miniEventCard.dart';
 
@@ -183,42 +184,70 @@ class Profile extends StatelessWidget {
                   Positioned(
                     left: 250,
                     top: 270,
-                    child: Container(
-                      width: 154,
-                      height: 40,
-                      padding: const EdgeInsets.all(8),
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 2, color: Color(0xFF000B45)),
-                          borderRadius: BorderRadius.circular(8),
+                    child: GestureDetector(
+                      onTap: () {
+                        // Navegue para a página EditProfile quando o botão for clicado
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditProfile()),
+                        );
+                      },
+                      child: Container(
+                        width: 154,
+                        height: 40,
+                        padding: const EdgeInsets.all(8),
+                        decoration: ShapeDecoration(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            side:
+                                BorderSide(width: 2, color: Color(0xFF000B45)),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Editar perfil',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0xFF000B45),
+                                fontSize: 16,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w400,
+                                height: 0,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Editar perfil',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF000B45),
-                              fontSize: 16,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.only(top: 20.0, left: 20.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Created Event",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF000B45),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 4.0,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
