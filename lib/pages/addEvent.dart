@@ -105,7 +105,7 @@ class _AddEventState extends State<AddEvent> {
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => MyEvents()), //!Não funciona
@@ -125,7 +125,7 @@ class _AddEventState extends State<AddEvent> {
                   height: 36,
                   width: double.infinity,
                   alignment: Alignment.center,
-                  child: Text('Salvar'),
+                  child: Text('Save'),
                 ),
               ),
             ],
