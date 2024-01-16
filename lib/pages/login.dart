@@ -1,6 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:projeto/pages/signup.dart';
 import 'package:projeto/pages/widgets/baseWidget.dart';
 
@@ -13,7 +15,99 @@ class LogIn extends StatefulWidget {
 
 class _LogInState extends State<LogIn> {
   bool _obscurePassword = true; //Icon para indicar se a senha está obscurecida
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
+  Future<void> login() async {
+    String apiUrl = 'https://backend-q4m5.onrender.com/login';
+
+    try {
+      var response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': _emailController.text,
+          'password': _passwordController.text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        dynamic responseBody = json.decode(response.body);
+
+        if (responseBody is Map<String, dynamic>) {
+          var token = responseBody['token'];
+          print('Login bem-sucedido. Token: $token');
+
+          // Show a success pop-up
+          _showSuccessDialog();
+        } else if (responseBody is String) {
+          print('Login bem-sucedido. Token: $responseBody');
+
+          // Show a success pop-up
+          _showSuccessDialog();
+        } else {
+          print('Resposta inesperada da API');
+        }
+      } else {
+        // Handle login failure
+        print('Erro no login');
+
+        // Show an error pop-up
+        _showErrorDialog('Login failed. Please check your credentials.');
+      }
+    } catch (e) {
+      print('Erro ao se conectar à API: $e');
+
+      // Show an error pop-up
+      _showErrorDialog('Error connecting to the server. Please try again.');
+    }
+  }
+
+  // Function to show a success pop-up
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login Successful'),
+          content: Text('You have successfully logged in.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BaseWidget()),
+                );
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Function to show an error pop-up
+  void _showErrorDialog(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login Error'),
+          content: Text(errorMessage),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +141,10 @@ class _LogInState extends State<LogIn> {
               ),
               SizedBox(height: 16.0),
               TextField(
+                controller: _emailController,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  labelText: 'Username',
+                  labelText: 'Email',
                   labelStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -118,12 +213,16 @@ class _LogInState extends State<LogIn> {
               ),
               SizedBox(height: 36.0),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    //! Lógica do LogIn aqui
-                    MaterialPageRoute(builder: (context) => BaseWidget()),
-                  );
+                onPressed: () async {
+                  try {
+                    // Call the login function
+                    await login();
+                  } catch (e) {
+                    // Handle login errors
+                    print('Error during login: $e');
+                    _showErrorDialog(
+                        'An unexpected error occurred. Please try again.');
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF000B45),

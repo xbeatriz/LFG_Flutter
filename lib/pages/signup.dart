@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:projeto/pages/widgets/baseWidget.dart';
 import 'package:projeto/pages/login.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert'; //for JSONencode
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -12,7 +13,73 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   bool _obscurePassword = true;
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
+  Future<void> register() async {
+    String apiUrl = 'https://backend-q4m5.onrender.com/register';
+
+    try {
+      var response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'name': _nameController.text,
+          'email': _emailController.text,
+          'password': _passwordController.text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Registration successful
+        print('Registration successful');
+        // You may check for specific success conditions here if needed
+
+        // Proceed to login screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LogIn()),
+        );
+      } else if (response.statusCode == 409) {
+        // Duplicated user error
+        print('Duplicated user error');
+        // Show popup with error message
+        showRegistrationErrorPopup(
+            'Duplicated user. Please use a different email.');
+      } else {
+        // An error occurred
+        print('Error in registration');
+        // Show popup with a general error message
+        showRegistrationErrorPopup('An error occurred during registration.');
+      }
+    } catch (e) {
+      print('Error connecting to the API: $e');
+      // Show popup with network error message
+      showRegistrationErrorPopup(
+          'Error connecting to the server. Please try again later.');
+    }
+  }
+
+  void showRegistrationErrorPopup(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Registration Error'),
+          content: Text(errorMessage),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +113,10 @@ class _SignUpState extends State<SignUp> {
               ),
               SizedBox(height: 16.0),
               TextField(
+                controller: _nameController,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  labelText: 'Email',
+                  labelText: 'Name',
                   labelStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -66,9 +134,10 @@ class _SignUpState extends State<SignUp> {
               ),
               SizedBox(height: 16.0),
               TextField(
+                controller: _emailController,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  labelText: 'Username',
+                  labelText: 'Email',
                   labelStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -121,12 +190,16 @@ class _SignUpState extends State<SignUp> {
               ),
               SizedBox(height: 44.0),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => BaseWidget()),
-                  );
-                  // Implement your SignUp logic here
+                onPressed: () async {
+                  try {
+                    // Call the login function
+                    await register();
+                  } catch (e) {
+                    // Handle login errors
+                    print('Error during login: $e');
+                    showRegistrationErrorPopup(
+                        'An unexpected error occurred. Please try again.');
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF000B45),

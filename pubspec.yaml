@@ -33,6 +33,7 @@ dependencies:
   flutter_svg: ^2.0.9
   images_picker: ^1.2.11
   intl: ^0.18.1
+  http: any
 
 
 
