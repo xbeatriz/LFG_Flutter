@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:images_picker/images_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:projeto/pages/widgets/inputText.dart';
 
 class EditProfile extends StatefulWidget {
@@ -19,6 +20,29 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController userBioController = TextEditingController();
 
   TextEditingController userDiscordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Chame a função que verifica e solicita as permissões aqui
+    checkAndRequestPermissions();
+  }
+
+  Future<void> checkAndRequestPermissions() async {
+    // Verifique e solicite permissões necessárias aqui
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.camera,
+      Permission.location,
+    ].request();
+
+    if (statuses[Permission.camera] == PermissionStatus.denied) {
+      // Lógica adicional para lidar com a recusa da permissão da câmera
+    }
+
+    if (statuses[Permission.location] == PermissionStatus.restricted) {
+      // Lógica adicional para lidar com restrições de localização
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

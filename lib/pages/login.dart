@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:projeto/pages/signup.dart';
 import 'package:projeto/pages/widgets/baseWidget.dart';
@@ -239,27 +237,6 @@ class _LogInState extends State<LogIn> {
                   alignment: Alignment.center,
                   child: Text('LogIn'),
                 ),
-              ),
-              SizedBox(height: 16.0),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Log In with Google',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  SizedBox(height: 16.0),
-                  GestureDetector(
-                    onTap: () {
-                      //! Adicionar a lógica de login do Google aqui
-                    },
-                    child: SvgPicture.asset(
-                      'assets/icons/google.svg',
-                      width: 24,
-                      height: 24,
-                    ),
-                  ),
-                ],
               ),
               SizedBox(height: 16.0),
               Text(
