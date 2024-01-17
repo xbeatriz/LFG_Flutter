@@ -35,6 +35,8 @@ dependencies:
   intl: ^0.18.1
   http: any
   permission_handler: ^10.1.0
+  localstorage: ^4.0.1+4
+  shared_preferences: ^2.2.2
 
 
 

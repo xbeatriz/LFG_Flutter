@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projeto/pages/login.dart';
+import 'package:projeto/pages/widgets/baseWidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,9 +18,16 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => const LogIn()));
+    Future.delayed(Duration(seconds: 2), () async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      if (prefs.getString('token') != null) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => BaseWidget(currentPageIndex: 0)));
+      } else {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (_) => const LogIn()));
+      }
     });
   }
 

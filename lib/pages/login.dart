@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:projeto/pages/signup.dart';
 import 'package:projeto/pages/widgets/baseWidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -31,17 +32,16 @@ class _LogInState extends State<LogIn> {
 
       if (response.statusCode == 200) {
         dynamic responseBody = json.decode(response.body);
-
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
         if (responseBody is Map<String, dynamic>) {
           var token = responseBody['token'];
-          print('Login bem-sucedido. Token: $token');
-
+          // print('Login bem-sucedido. Token: $token');
+          await prefs.setString('token', token);
           // Show a success pop-up
           _showSuccessDialog();
         } else if (responseBody is String) {
-          print('Login bem-sucedido. Token: $responseBody');
-
           // Show a success pop-up
+          await prefs.setString('token', responseBody);
           _showSuccessDialog();
         } else {
           print('Resposta inesperada da API');
