@@ -15,7 +15,7 @@ class _EditProfileState extends State<EditProfile> {
 
   TextEditingController userAgeController = TextEditingController();
 
-  TextEditingController UserNameController = TextEditingController();
+  TextEditingController _userNameController = TextEditingController();
 
   TextEditingController userBioController = TextEditingController();
 
@@ -60,7 +60,7 @@ class _EditProfileState extends State<EditProfile> {
             children: [
               InputText(text: "Name", controller: userNameController),
               SizedBox(height: 16.0),
-              InputText(text: "UserName", controller: UserNameController),
+              InputText(text: "UserName", controller: _userNameController),
               SizedBox(
                 height: 16.0,
               ),
