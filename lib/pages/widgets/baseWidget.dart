@@ -4,20 +4,26 @@ import 'package:projeto/pages/myEvent.dart';
 import 'package:projeto/pages/home.dart';
 import 'package:projeto/pages/profile.dart';
 
+// ignore: must_be_immutable
 class BaseWidget extends StatefulWidget {
-  const BaseWidget({Key? key}) : super(key: key);
+  int currentPageIndex;
+
+  BaseWidget({Key? key, required this.currentPageIndex}) : super(key: key);
 
   @override
   State<BaseWidget> createState() => _BaseWidgetState();
 }
 
 class _BaseWidgetState extends State<BaseWidget> {
-  int currentPageIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: [HomeScreen(), MyEvents(), AddEvent(), Profile()][currentPageIndex],
+      body: [
+        HomeScreen(),
+        MyEvents(),
+        AddEvent(),
+        Profile()
+      ][widget.currentPageIndex],
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           canvasColor: Color(0xFF000B45),
@@ -26,28 +32,31 @@ class _BaseWidgetState extends State<BaseWidget> {
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white,
           type: BottomNavigationBarType.fixed,
-          currentIndex: currentPageIndex,
+          currentIndex: widget.currentPageIndex,
           onTap: (index) {
             setState(() {
-              currentPageIndex = index;
+              widget.currentPageIndex = index;
             });
           },
           items: [
             BottomNavigationBarItem(
-              icon: buildIconWithCircle(Icons.home, currentPageIndex == 0),
+              icon:
+                  buildIconWithCircle(Icons.home, widget.currentPageIndex == 0),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: buildIconWithCircle(
-                  Icons.gamepad_rounded, currentPageIndex == 1),
+                  Icons.gamepad_rounded, widget.currentPageIndex == 1),
               label: 'My Events',
             ),
             BottomNavigationBarItem(
-              icon: buildIconWithCircle(Icons.add, currentPageIndex == 2),
+              icon:
+                  buildIconWithCircle(Icons.add, widget.currentPageIndex == 2),
               label: 'Add Events',
             ),
             BottomNavigationBarItem(
-              icon: buildIconWithCircle(Icons.person, currentPageIndex == 3),
+              icon: buildIconWithCircle(
+                  Icons.person, widget.currentPageIndex == 3),
               label: 'Profile',
             ),
           ],

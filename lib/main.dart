@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto/pages/myEvent.dart';
 import 'pages/splashscreen.dart';
 
 void main() {
@@ -14,6 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
+      routes: {
+        '/myEvents': (context) => MyEvents(),
+      },
     );
   }
 }

@@ -75,7 +75,10 @@ class _LogInState extends State<LogIn> {
                 Navigator.of(context).pop(); // Close the dialog
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => BaseWidget()),
+                  MaterialPageRoute(
+                      builder: (context) => BaseWidget(
+                            currentPageIndex: 0,
+                          )),
                 );
               },
               child: Text('OK'),

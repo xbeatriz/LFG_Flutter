@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:projeto/pages/myEvent.dart';
+import 'package:projeto/pages/widgets/baseWidget.dart';
 import 'package:projeto/pages/widgets/dropdownInput.dart';
 import 'package:projeto/pages/widgets/inputText.dart';
 import 'package:projeto/pages/widgets/selectedDate.dart';
@@ -105,11 +106,12 @@ class _AddEventState extends State<AddEvent> {
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyEvents()), //!Não funciona
-                  );
+                  // Navegar para a página Profile no índice 3 do BottomNavigationBar
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => BaseWidget(
+                        currentPageIndex:
+                            3), // Define o índice para 3 (Profile)
+                  ));
                   //! Lógica para salvar os dados
                 },
                 style: ElevatedButton.styleFrom(
