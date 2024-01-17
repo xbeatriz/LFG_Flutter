@@ -32,33 +32,56 @@ class _SignUpState extends State<SignUp> {
       );
 
       if (response.statusCode == 200) {
-        // Registration successful
-        print('Registration successful');
-        // You may check for specific success conditions here if needed
-
-        // Proceed to login screen
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => LogIn()),
-        );
+        // Registro bem-sucedido
+        print('Registro bem-sucedido');
+        // Mostrar popup de sucesso
+        showRegistrationSuccessPopup();
+        // Prosseguir para a tela de login se desejado
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => LogIn()),
+        // );
       } else if (response.statusCode == 409) {
-        // Duplicated user error
-        print('Duplicated user error');
-        // Show popup with error message
+        // Erro de usuário duplicado
+        print('Erro de usuário duplicado');
+        // Mostrar popup com mensagem de erro
         showRegistrationErrorPopup(
-            'Duplicated user. Please use a different email.');
+            'Usuário duplicado. Por favor, use um e-mail diferente.');
       } else {
-        // An error occurred
-        print('Error in registration');
-        // Show popup with a general error message
-        showRegistrationErrorPopup('An error occurred during registration.');
+        // Um erro ocorreu
+        print('Erro no registro');
+        // Mostrar popup com mensagem de erro geral
+        showRegistrationErrorPopup('Ocorreu um erro durante o registro.');
       }
     } catch (e) {
-      print('Error connecting to the API: $e');
-      // Show popup with network error message
+      print('Erro ao conectar-se à API: $e');
+      // Mostrar popup com mensagem de erro de rede
       showRegistrationErrorPopup(
-          'Error connecting to the server. Please try again later.');
+          'Erro ao conectar-se ao servidor. Por favor, tente novamente mais tarde.');
     }
+  }
+
+//Function to show a success pop-up
+  void showRegistrationSuccessPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Registro bem-sucedido'),
+          content: Text("You have successfully sign in."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Fechar o diálogo
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => LogIn()));
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void showRegistrationErrorPopup(String errorMessage) {
@@ -192,13 +215,13 @@ class _SignUpState extends State<SignUp> {
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    // Call the login function
+                    // Chamar a função de registro
                     await register();
                   } catch (e) {
-                    // Handle login errors
-                    print('Error during login: $e');
+                    // Lidar com erros de registro
+                    print('Erro durante o registro: $e');
                     showRegistrationErrorPopup(
-                        'An unexpected error occurred. Please try again.');
+                        'Ocorreu um erro inesperado. Por favor, tente novamente.');
                   }
                 },
                 style: ElevatedButton.styleFrom(

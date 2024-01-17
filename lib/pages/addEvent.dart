@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:projeto/pages/myEvent.dart';
 import 'package:projeto/pages/widgets/baseWidget.dart';
 import 'package:projeto/pages/widgets/dropdownInput.dart';
 import 'package:projeto/pages/widgets/inputText.dart';
