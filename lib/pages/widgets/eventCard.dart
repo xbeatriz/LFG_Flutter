@@ -122,7 +122,7 @@ class EventCard extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                height: 500,
+                height: 550,
                 padding: EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
                   color: Color(0xFF000B45),
@@ -313,6 +313,13 @@ class EventCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text('Subscribe'),
+                      ),
+                    )
                   ],
                 ),
               ),
