@@ -3,6 +3,7 @@ import 'package:projeto/pages/addGame.dart';
 import 'package:projeto/pages/editProfile.dart';
 import 'package:projeto/pages/splashscreen.dart';
 import 'package:projeto/pages/widgets/miniEventCard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -296,16 +297,22 @@ class _ProfileState extends State<Profile> {
               secondary: Icon(Icons.admin_panel_settings),
             ),
             ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Log Out'),
-              onTap: () {
-                Navigator.pop(
-                  context,
-                  MaterialPageRoute(builder: (context) => SplashScreen()),
-                );
-                Navigator.pop(context);
-              },
-            ),
+                leading: Icon(Icons.exit_to_app),
+                title: Text('Log Out'),
+                onTap: () async {
+                  // Clear SharedPreferences
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.clear();
+
+                  // Navigate to Login and close the bottom sheet
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            SplashScreen(), // replace with your login screen
+                      ));
+                }),
           ],
         );
       },

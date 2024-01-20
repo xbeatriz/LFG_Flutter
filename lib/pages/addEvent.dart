@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:projeto/pages/widgets/baseWidget.dart';
 import 'package:projeto/pages/widgets/dropdownInput.dart';
 import 'package:projeto/pages/widgets/inputText.dart';
 import 'package:projeto/pages/widgets/selectedDate.dart';
 import 'package:projeto/pages/widgets/selectedTime.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddEvent extends StatefulWidget {
   const AddEvent({Key? key}) : super(key: key);
@@ -13,39 +16,56 @@ class AddEvent extends StatefulWidget {
 }
 
 class _AddEventState extends State<AddEvent> {
-  // Controllers para os campos de input
   TextEditingController eventNameController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController ageLimitController = TextEditingController();
   TextEditingController localController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  // LatLng? selectedLocation;
-
-  // Valores para o dropdown de jogos
   List<String> games = ['Jogo 1', 'Jogo 2', 'Jogo 3'];
   String selectedGame = 'Jogo 1';
-
-  // Variável onde guarda a Data e hora selecionadas
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
 
-  // Função para exibir o botão de hora
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked =
-        await showTimePicker(context: context, initialTime: selectedTime);
+  Future<void> _saveEvent() async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
 
-    if (picked != null) {
-      // Atualizar apenas a hora, mantendo a data inalterada
-      setState(() {
-        selectedTime = picked;
-        selectedDate = DateTime(
-          selectedDate.year,
-          selectedDate.month,
-          selectedDate.day,
-          picked.hour,
-          picked.minute,
-        );
-      });
+      String apiUrl =
+          'https://backend-q4m5.onrender.com/events'; // Replace with the actual API endpoint
+
+      Map<String, dynamic> eventData = {
+        "name": eventNameController.text,
+        "selectedGame": selectedGame,
+        "userName": userNameController.text,
+        "date": selectedDate.toIso8601String(),
+        "hour": selectedTime.format(context),
+        "ageLimit": ageLimitController.text,
+        "local": localController.text,
+        "description": descriptionController.text,
+      };
+
+      var response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(eventData),
+      );
+
+      if (response.statusCode == 201) {
+        print('Event saved successfully');
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => BaseWidget(currentPageIndex: 3),
+        ));
+      } else {
+        print('Failed to save event. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        // Handle error, e.g., show an error message
+      }
+    } catch (e) {
+      print('Error saving event: $e');
     }
   }
 
@@ -64,23 +84,29 @@ class _AddEventState extends State<AddEvent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InputText(
-                  text: "Nome do Evento", controller: eventNameController),
+                text: "Nome do Evento",
+                controller: eventNameController,
+              ),
               SizedBox(height: 16.0),
               DropdownInput(
                 text: "Jogo",
                 selectedGame: selectedGame,
               ),
               SizedBox(height: 16.0),
-              InputText(text: "UserName", controller: userNameController),
+              InputText(
+                text: "UserName",
+                controller: userNameController,
+              ),
               SizedBox(height: 16.0),
               DateTimePicker(
-                  text: "Date",
-                  initialDateTime: selectedDate,
-                  onDateTimeSelected: (date) {
-                    setState(() {
-                      selectedDate = date;
-                    });
-                  }),
+                text: "Date",
+                initialDateTime: selectedDate,
+                onDateTimeSelected: (date) {
+                  setState(() {
+                    selectedDate = date;
+                  });
+                },
+              ),
               SizedBox(height: 16.0),
               TimePicker(
                 text: "Hora",
@@ -92,9 +118,15 @@ class _AddEventState extends State<AddEvent> {
                 },
               ),
               SizedBox(height: 16.0),
-              InputText(text: "Age Limit", controller: ageLimitController),
+              InputText(
+                text: "Age Limit",
+                controller: ageLimitController,
+              ),
               SizedBox(height: 16.0),
-              InputText(text: "Local", controller: localController),
+              InputText(
+                text: "Local",
+                controller: localController,
+              ),
               SizedBox(height: 16.0),
               InputText(
                 text: "Descrição",
@@ -104,13 +136,7 @@ class _AddEventState extends State<AddEvent> {
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // Navegar para a página Profile no índice 3 do BottomNavigationBar
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => BaseWidget(
-                        currentPageIndex:
-                            3), // Define o índice para 3 (Profile)
-                  ));
-                  //! Lógica para salvar os dados
+                  _saveEvent();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF000B45),

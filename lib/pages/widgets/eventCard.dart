@@ -57,7 +57,7 @@ class EventCard extends StatelessWidget {
                     width: 1.0,
                   ),
                   image: DecorationImage(
-                    image: AssetImage(imageUrl),
+                    image: NetworkImage(imageUrl),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -151,7 +151,7 @@ class EventCard extends StatelessWidget {
                           width: 2.0,
                         ),
                         image: DecorationImage(
-                          image: AssetImage(imageUrl),
+                          image: NetworkImage(imageUrl),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -168,7 +168,7 @@ class EventCard extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(
-                              text: "Nome do Utilizador: ",
+                              text: "Username: ",
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                               ),
@@ -246,7 +246,7 @@ class EventCard extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(
-                              text: "Nome do jogo: ",
+                              text: "Game name: ",
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                               ),
@@ -272,7 +272,7 @@ class EventCard extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(
-                              text: "Idade limite: ",
+                              text: "Age Limit: ",
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                               ),
@@ -298,7 +298,7 @@ class EventCard extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(
-                              text: "Descrição: ",
+                              text: "Description: ",
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                               ),
