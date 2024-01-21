@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:projeto/pages/login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; //for JSONencode
@@ -241,26 +240,6 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               SizedBox(height: 16.0),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Sign up with Google',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  SizedBox(height: 16.0),
-                  GestureDetector(
-                    onTap: () {
-                      // Adicione a lógica de login do Google aqui
-                    },
-                    child: SvgPicture.asset(
-                      'assets/icons/google.svg',
-                      width: 24,
-                      height: 24,
-                    ),
-                  ),
-                ],
-              ),
               SizedBox(height: 16.0),
               Text(
                 'Already have an account?',
