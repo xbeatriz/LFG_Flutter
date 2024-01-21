@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:images_picker/images_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:projeto/pages/widgets/inputText.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -12,36 +15,94 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   TextEditingController userNameController = TextEditingController();
-
   TextEditingController userAgeController = TextEditingController();
-
-  TextEditingController _userNameController = TextEditingController();
-
+  TextEditingController userTagController = TextEditingController();
   TextEditingController userBioController = TextEditingController();
-
   TextEditingController userDiscordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    // Chame a função que verifica e solicita as permissões aqui
+    // Call the function that checks and requests permissions here
     checkAndRequestPermissions();
   }
 
   Future<void> checkAndRequestPermissions() async {
-    // Verifique e solicite permissões necessárias aqui
+    // Check and request necessary permissions here
     Map<Permission, PermissionStatus> statuses = await [
       Permission.camera,
       Permission.location,
     ].request();
 
     if (statuses[Permission.camera] == PermissionStatus.denied) {
-      // Lógica adicional para lidar com a recusa da permissão da câmera
+      // Additional logic to handle camera permission denial
     }
 
     if (statuses[Permission.location] == PermissionStatus.restricted) {
-      // Lógica adicional para lidar com restrições de localização
+      // Additional logic to handle location restrictions
     }
+  }
+
+  Future<void> _saveProfile() async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+
+      String apiUrl = 'https://backend-q4m5.onrender.com/users';
+
+      Map<String, dynamic> profileData = {
+        "name": userNameController.text,
+        "tagname": userTagController.text,
+        "age": userAgeController.text,
+        "bio": userBioController.text,
+        "discordAccount": userDiscordController.text,
+        // Add other profile data as needed
+      };
+
+      var response = await http.put(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(profileData),
+      );
+
+      if (response.statusCode == 200) {
+        print('Profile updated successfully');
+        //  Lidar com a atualização bem-sucedida
+        // Show a success pop-up
+        _showSuccessDialog();
+        Navigator.pop(context);
+      } else {
+        print('Failed to update profile. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        // Handle error, e.g., show an error message
+      }
+    } catch (e) {
+      print('Error updating profile: $e');
+    }
+  }
+
+  // Function to show a success pop-up
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login Successful'),
+          content: Text('You have successfully logged in.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Fechar o diálogo
+                },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -50,7 +111,6 @@ class _EditProfileState extends State<EditProfile> {
       appBar: AppBar(
         title: Text("Edit Profile"),
         backgroundColor: Color(0xFF000B45),
-        // automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -60,48 +120,35 @@ class _EditProfileState extends State<EditProfile> {
             children: [
               InputText(text: "Name", controller: userNameController),
               SizedBox(height: 16.0),
-              InputText(text: "UserName", controller: _userNameController),
-              SizedBox(
-                height: 16.0,
-              ),
+              InputText(text: "Tagname", controller: userTagController),
+              SizedBox(height: 16.0),
               InputText(text: "Age", controller: userAgeController),
-              SizedBox(
-                height: 16.0,
-              ),
+              SizedBox(height: 16.0),
               InputText(
-                text: "Bio",
-                controller: userBioController,
-                maxLines: 3,
-              ),
-              SizedBox(
-                height: 16.0,
-              ),
+                  text: "Bio", controller: userBioController, maxLines: 3),
+              SizedBox(height: 16.0),
               InputText(
                   text: "Discord Account", controller: userDiscordController),
-              SizedBox(
-                height: 16.0,
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () async {
+                  List<Media>? results = await ImagesPicker.pick(
+                    pickType: PickType.image,
+                  );
+                },
+                child: Text("GALERIA"),
               ),
               ElevatedButton(
-                  onPressed: () async {
-                    List<Media>? results = await ImagesPicker.pick(
-                      pickType: PickType.image,
-                    );
-                  },
-                  child: Text("GALERIA")),
-              ElevatedButton(
-                  onPressed: () {
-                    ImagesPicker.openCamera(
-                      pickType: PickType.image,
-                      //maxTime: 15, // record video max time
-                    );
-                  },
-                  child: Text("CAMARA")),
-              ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(
-                    context,
+                  ImagesPicker.openCamera(
+                    pickType: PickType.image,
                   );
-                  //! Lógica para salvar os dados
+                },
+                child: Text("CAMARA"),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  await _saveProfile();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF000B45),

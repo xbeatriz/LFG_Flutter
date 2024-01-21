@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
   List<Event> events = [];
-  String? _token;
+  //String? _token;
 
   @override
   void initState() {
