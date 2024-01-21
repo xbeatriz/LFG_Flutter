@@ -32,7 +32,7 @@ class _MyEventsState extends State<MyEvents> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Os meus eventos"),
+        title: Text("My Events"),
         backgroundColor: Color(0xFF000B45),
         automaticallyImplyLeading: false,
       ),
@@ -127,7 +127,6 @@ class _MyEventsState extends State<MyEvents> {
                     child: EventCard(
                       imageUrl: events[index].imageUrl,
                       eventTitle: events[index].eventTitle,
-                      userName: events[index].userName,
                       dateAndTime: events[index].dateAndTime,
                       discordAccount: '',
                       gameName: '',

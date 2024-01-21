@@ -26,8 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
-    String apiUrl =
-        'https://backend-q4m5.onrender.com/events'; // Replace with the actual API endpoint
+    String apiUrl = 'https://backend-q4m5.onrender.com/events';
 
     try {
       var response = await http.get(
@@ -104,16 +103,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     EventCard(
                       imageUrl: events[index].imageUrl ?? "",
                       eventTitle: events[index].eventTitle ?? "",
-                      userName: events[index].userName ?? "",
                       dateAndTime: events[index].dateAndTime ?? "",
                       discordAccount: events[index].discordAccount ?? "",
                       gameName: events[index].gameName ?? "",
                       ageLimit: " ${events[index].ageLimit}" ?? "",
                       description: events[index].description ?? "",
                     ),
-                    SizedBox(
-                        height:
-                            16.0), // Adicione o espaçamento desejado entre os cards
+                    SizedBox(height: 16.0),
                   ],
                 );
               },
@@ -128,7 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
 class Event {
   final String? imageUrl;
   final String? eventTitle;
-  final String? userName;
   final String? dateAndTime;
   final String? discordAccount;
   final String? gameName;
@@ -138,7 +133,6 @@ class Event {
   Event({
     required this.imageUrl,
     required this.eventTitle,
-    required this.userName,
     required this.dateAndTime,
     required this.discordAccount,
     required this.gameName,
@@ -148,12 +142,11 @@ class Event {
 
   factory Event.fromJson(Map<String, dynamic> json) {
     return Event(
-      imageUrl: json['imageUrl'],
+      imageUrl: json['thumbnailGame'],
       eventTitle: json['name'],
-      userName: json['userName'],
       dateAndTime: json['date'],
       discordAccount: json['discordAccount'],
-      gameName: json['gameName'],
+      gameName: json['nameGame'],
       ageLimit: json['ageLimit'],
       description: json['description'],
     );

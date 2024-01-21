@@ -17,27 +17,28 @@ class AddEvent extends StatefulWidget {
 
 class _AddEventState extends State<AddEvent> {
   TextEditingController eventNameController = TextEditingController();
-  TextEditingController userNameController = TextEditingController();
   TextEditingController ageLimitController = TextEditingController();
   TextEditingController localController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController discordAccountController = TextEditingController();
   List<String> games = ['Jogo 1', 'Jogo 2', 'Jogo 3'];
   String selectedGame = 'Jogo 1';
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
+  TextEditingController thumnailGameController = TextEditingController();
 
   Future<void> _saveEvent() async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
 
-      String apiUrl =
-          'https://backend-q4m5.onrender.com/events'; // Replace with the actual API endpoint
+      String apiUrl = 'https://backend-q4m5.onrender.com/events';
 
       Map<String, dynamic> eventData = {
         "name": eventNameController.text,
-        "selectedGame": selectedGame,
-        "userName": userNameController.text,
+        "nameGame": selectedGame.toString(),
+        "thumbnailGame": thumnailGameController.text,
+        "discordAccount": discordAccountController.text,
         "date": selectedDate.toIso8601String(),
         "hour": selectedTime.format(context),
         "ageLimit": ageLimitController.text,
@@ -73,7 +74,7 @@ class _AddEventState extends State<AddEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Adiciona Eventos"),
+        title: Text("Add Event"),
         backgroundColor: Color(0xFF000B45),
         automaticallyImplyLeading: false,
       ),
@@ -84,18 +85,18 @@ class _AddEventState extends State<AddEvent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InputText(
-                text: "Nome do Evento",
+                text: "Event Name",
                 controller: eventNameController,
               ),
               SizedBox(height: 16.0),
-              DropdownInput(
-                text: "Jogo",
-                selectedGame: selectedGame,
+              InputText(
+                text: "Favorite game photo",
+                controller: thumnailGameController,
               ),
               SizedBox(height: 16.0),
-              InputText(
-                text: "UserName",
-                controller: userNameController,
+              DropdownInput(
+                text: "Game",
+                selectedGame: selectedGame,
               ),
               SizedBox(height: 16.0),
               DateTimePicker(
@@ -109,13 +110,18 @@ class _AddEventState extends State<AddEvent> {
               ),
               SizedBox(height: 16.0),
               TimePicker(
-                text: "Hora",
+                text: "Hour",
                 initialTime: selectedTime,
                 onTimeSelected: (newTime) {
                   setState(() {
                     selectedTime = newTime;
                   });
                 },
+              ),
+              SizedBox(height: 16.0),
+              InputText(
+                text: "Discord Account",
+                controller: discordAccountController,
               ),
               SizedBox(height: 16.0),
               InputText(
@@ -129,7 +135,7 @@ class _AddEventState extends State<AddEvent> {
               ),
               SizedBox(height: 16.0),
               InputText(
-                text: "Descrição",
+                text: "Description",
                 controller: descriptionController,
                 maxLines: 3,
               ),

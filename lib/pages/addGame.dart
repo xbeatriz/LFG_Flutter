@@ -59,13 +59,14 @@ class _AddGameState extends State<AddGame> {
                   },
                   child: Text("Select")),
               SizedBox(height: 16.0),
+              InputText(text: "Thumbnail", controller: gameThumbnailController),
+              SizedBox(height: 16.0),
               InputText(text: "Genre", controller: gameGenreController),
               SizedBox(height: 16.0),
               InputText(text: "Plataform", controller: gamePlataformController),
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  // Navegar para a página Profile no índice 3 do BottomNavigationBar
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => BaseWidget(
                         currentPageIndex:

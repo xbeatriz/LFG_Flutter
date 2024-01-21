@@ -220,7 +220,7 @@ class _ProfileState extends State<Profile> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'Editar perfil',
+                              'Edit profile',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFF000B45),

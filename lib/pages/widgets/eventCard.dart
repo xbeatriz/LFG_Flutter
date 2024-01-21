@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class EventCard extends StatelessWidget {
   final String imageUrl;
   final String eventTitle;
-  final String userName;
+
   final String dateAndTime;
   final String discordAccount;
   final String gameName;
@@ -13,7 +13,6 @@ class EventCard extends StatelessWidget {
   EventCard({
     required this.imageUrl,
     required this.eventTitle,
-    required this.userName,
     required this.dateAndTime,
     required this.discordAccount,
     required this.gameName,
@@ -76,18 +75,6 @@ class EventCard extends StatelessWidget {
                           fontSize: 16.0,
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                        userName,
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w400,
                           color: Colors.white,
                         ),
                       ),
@@ -157,32 +144,6 @@ class EventCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 8.0),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            fontFamily: 'Montserrat',
-                            color: Colors.white,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: "Username: ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "$userName",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: RichText(
@@ -347,13 +308,12 @@ class EventCard extends StatelessWidget {
 class EventData {
   final String imageUrl;
   final String eventTitle;
-  final String userName;
+
   final String dateAndTime;
 
   EventData({
     required this.imageUrl,
     required this.eventTitle,
-    required this.userName,
     required this.dateAndTime,
   });
 }
