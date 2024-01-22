@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:projeto/pages/searchPage.dart';
 import 'package:projeto/pages/widgets/eventCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,6 +15,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
   List<Event> events = [];
+
+  get allEvents => null;
   //String? _token;
 
   @override
@@ -57,6 +60,24 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (err) {}
   }
 
+  void _navigateToSearchScreen(List<Event> searchResults) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchScreen(searchResults: searchResults),
+      ),
+    );
+  }
+
+  void _filterEvents(String searchTerm) {
+    List<Event> searchResults = allEvents
+        .where((event) =>
+            event.gameName!.toLowerCase().contains(searchTerm.toLowerCase()))
+        .toList();
+
+    _navigateToSearchScreen(searchResults);
+  }
+
   @override
   Widget build(BuildContext context) {
     print('Number of events: ${events.length}'); // Add this line
@@ -84,6 +105,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: TextField(
                     controller: searchController,
+                    onSubmitted: (searchTerm) {
+                      _filterEvents(searchTerm);
+                    },
                     decoration: InputDecoration(
                       hintText: 'Search a game event',
                       border: InputBorder.none,
