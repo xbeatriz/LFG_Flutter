@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:projeto/pages/widgets/baseWidget.dart';
 import 'package:projeto/pages/widgets/dropdownInput.dart';
 import 'package:projeto/pages/widgets/inputText.dart';
 import 'package:projeto/pages/widgets/selectedDate.dart';
 import 'package:projeto/pages/widgets/selectedTime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class AddEvent extends StatefulWidget {
   const AddEvent({Key? key}) : super(key: key);
@@ -21,11 +21,55 @@ class _AddEventState extends State<AddEvent> {
   TextEditingController localController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController discordAccountController = TextEditingController();
-  List<String> games = ['Jogo 1', 'Jogo 2', 'Jogo 3'];
-  String selectedGame = 'Jogo 1';
+  TextEditingController thumnailGameController = TextEditingController();
+  String selectedGame = '';
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
-  TextEditingController thumnailGameController = TextEditingController();
+  List<String> games = []; // Lista de jogos
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchGames();
+  }
+
+  Future<void> _fetchGames() async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+
+      String apiUrl = 'https://backend-q4m5.onrender.com/games';
+
+      var response = await http.get(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        dynamic responseBody = json.decode(response.body);
+        if (responseBody is List) {
+          setState(() {
+            games = responseBody
+                .map<String>((game) => game['name'] as String)
+                .toList();
+            if (games.isNotEmpty) {
+              selectedGame = games[0];
+            }
+          });
+        } else {
+          print('Unexpected response from API');
+        }
+      } else {
+        print('Failed to fetch games. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (err) {
+      print('Error fetching games: $err');
+    }
+  }
 
   Future<void> _saveEvent() async {
     try {
@@ -36,7 +80,7 @@ class _AddEventState extends State<AddEvent> {
 
       Map<String, dynamic> eventData = {
         "name": eventNameController.text,
-        "nameGame": selectedGame.toString(),
+        "nameGame": selectedGame,
         "thumbnailGame": thumnailGameController.text,
         "discordAccount": discordAccountController.text,
         "date": selectedDate.toIso8601String(),
@@ -97,6 +141,17 @@ class _AddEventState extends State<AddEvent> {
               DropdownInput(
                 text: "Game",
                 selectedGame: selectedGame,
+                games: games.map((game) {
+                  return DropdownMenuItem<String>(
+                    value: game,
+                    child: Text(game),
+                  );
+                }).toList(),
+                onGameSelected: (game) {
+                  setState(() {
+                    selectedGame = game;
+                  });
+                },
               ),
               SizedBox(height: 16.0),
               DateTimePicker(

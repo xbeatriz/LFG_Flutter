@@ -57,7 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
         print('Response body: ${response.body}');
       }
       // ignore: empty_catches
-    } catch (err) {}
+    } catch (err) {
+      // Handle errors
+    }
   }
 
   void _navigateToSearchScreen(List<Event> searchResults) {
@@ -70,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _filterEvents(String searchTerm) {
-    List<Event> searchResults = allEvents
+    List<Event> searchResults = events
         .where((event) =>
             event.gameName!.toLowerCase().contains(searchTerm.toLowerCase()))
         .toList();
@@ -106,7 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: TextField(
                     controller: searchController,
                     onSubmitted: (searchTerm) {
-                      _filterEvents(searchTerm);
+                      _filterEvents(
+                          searchTerm); // Agora, passe o searchTerm para _filterEvents
                     },
                     decoration: InputDecoration(
                       hintText: 'Search a game event',
