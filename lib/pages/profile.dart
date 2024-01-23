@@ -14,6 +14,38 @@ class Profile extends StatefulWidget {
 
 bool isAdmin = false;
 
+class UserProfile {
+  String name;
+  String username;
+  String bio;
+  String location;
+  String discord;
+  int age;
+  String photo;
+  // Adicione outras propriedades conforme necessário
+
+  UserProfile({
+    required this.name,
+    required this.username,
+    required this.bio,
+    required this.location,
+    required this.discord,
+    required this.age,
+    required this.photo,
+  });
+}
+
+UserProfile userProfile = UserProfile(
+  name: 'Mark Volt',
+  username: 'mark21',
+  bio: 'Heyo, sou um fã autêntico de Valorant! Crio sempre playlists...',
+  location: '21, Porto',
+  discord: '@mark_21',
+  age: 21,
+  photo:
+      'https://pics.craiyon.com/2023-09-30/03ceca84990a4b33a642d96d88915ae5.webp',
+);
+
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
@@ -66,7 +98,7 @@ class _ProfileState extends State<Profile> {
                           width: 355,
                           height: 99,
                           child: Text(
-                            'Heyo, sou um fã autêntico de Valorant! Crio sempre playlists para poder ouvir enquanto que jogo. \nSou mais do tipo indie em músicas e quero descobrir jogos novos.\nPara além disso, adoro programar e passear o meu cão.',
+                            userProfile.bio,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
@@ -85,7 +117,7 @@ class _ProfileState extends State<Profile> {
                     child: SizedBox(
                       width: 123,
                       child: Text(
-                        'Mark Volt',
+                        userProfile.name,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
@@ -100,7 +132,7 @@ class _ProfileState extends State<Profile> {
                     left: 120,
                     top: 50,
                     child: Text(
-                      '@mark21',
+                      userProfile.username,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -124,7 +156,7 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         Text(
-                          '@mark_21',
+                          userProfile.discord,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -142,7 +174,8 @@ class _ProfileState extends State<Profile> {
                     child: SizedBox(
                       width: 123,
                       child: Text(
-                        '21, Porto',
+                        userProfile.age
+                            .toString(), // Convertendo o int para String
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -161,7 +194,7 @@ class _ProfileState extends State<Profile> {
                       height: 90,
                       decoration: ShapeDecoration(
                         image: DecorationImage(
-                          image: AssetImage("assets/images/Valorant.png"),
+                          image: NetworkImage(userProfile.photo),
                           fit: BoxFit.fill,
                         ),
                         shape: RoundedRectangleBorder(
