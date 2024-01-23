@@ -19,6 +19,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController userTagController = TextEditingController();
   TextEditingController userBioController = TextEditingController();
   TextEditingController userDiscordController = TextEditingController();
+  TextEditingController userPhotoController = TextEditingController();
 
   @override
   void initState() {
@@ -52,10 +53,11 @@ class _EditProfileState extends State<EditProfile> {
 
       Map<String, dynamic> profileData = {
         "name": userNameController.text,
-        "tagname": userTagController.text,
+        "username": userTagController.text,
         "age": userAgeController.text,
         "bio": userBioController.text,
         "discordAccount": userDiscordController.text,
+        "photo": userPhotoController,
         // Add other profile data as needed
       };
 
@@ -96,7 +98,7 @@ class _EditProfileState extends State<EditProfile> {
             TextButton(
               onPressed: () {
                 Navigator.pop(context); // Fechar o diálogo
-                },
+              },
               child: Text('OK'),
             ),
           ],
@@ -120,12 +122,14 @@ class _EditProfileState extends State<EditProfile> {
             children: [
               InputText(text: "Name", controller: userNameController),
               SizedBox(height: 16.0),
-              InputText(text: "Tagname", controller: userTagController),
+              InputText(text: "username", controller: userTagController),
               SizedBox(height: 16.0),
               InputText(text: "Age", controller: userAgeController),
               SizedBox(height: 16.0),
               InputText(
                   text: "Bio", controller: userBioController, maxLines: 3),
+              SizedBox(height: 16.0),
+              InputText(text: "Photo Link", controller: userPhotoController),
               SizedBox(height: 16.0),
               InputText(
                   text: "Discord Account", controller: userDiscordController),

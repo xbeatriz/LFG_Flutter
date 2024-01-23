@@ -14,13 +14,15 @@ class _MyEventsState extends State<MyEvents> {
   // Lista fictícia de eventos (substitua por seus dados reais)
   List<EventData> events = [
     EventData(
-      imageUrl: 'assets/images/Valorant.png',
+      imageUrl:
+          'https://media.gq-magazine.co.uk/photos/645b5c3c8223a5c3801b8b26/16:9/w_1280,c_limit/100-best-games-hp-b.jpg',
       eventTitle: 'TÍTULO DO EVENTO 1',
       userName: 'NOME DO USUÁRIO 1',
       dateAndTime: 'DATA E HORA 1',
     ),
     EventData(
-      imageUrl: 'assets/images/Valorant.png',
+      imageUrl:
+          'https://www.lego.com/cdn/cs/set/assets/blt0f703dfbce999d88/Video-games-Juno-Carousel-card.jpg?fit=crop&format=jpg&quality=80&width=635&height=440&dpr=1',
       eventTitle: 'TÍTULO DO EVENTO 2',
       userName: 'NOME DO USUÁRIO 2',
       dateAndTime: 'DATA E HORA 2',

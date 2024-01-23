@@ -24,7 +24,6 @@ class UserProfile {
   String discord;
   int age;
   String photo;
-  // Adicione outras propriedades conforme necessário
 
   UserProfile({
     required this.name,
@@ -38,11 +37,20 @@ class UserProfile {
 }
 
 class _ProfileState extends State<Profile> {
-  late UserProfile userProfile; // Inicializa userProfile
+  late UserProfile userProfile;
 
   @override
   void initState() {
     super.initState();
+    userProfile = UserProfile(
+      name: '',
+      username: '',
+      bio: '',
+      location: '',
+      discord: '',
+      age: 0,
+      photo: '',
+    );
     _fetchUserProfile();
   }
 
@@ -50,8 +58,7 @@ class _ProfileState extends State<Profile> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
-    String apiUrl =
-        'https://sua-api.com/user'; // Substitua pela URL correta da sua API
+    String apiUrl = 'https://backend-q4m5.onrender.com/users/authenticated';
 
     try {
       var response = await http.get(
@@ -66,16 +73,17 @@ class _ProfileState extends State<Profile> {
 
       if (response.statusCode == 200) {
         dynamic responseBody = json.decode(response.body);
-        if (responseBody is Map<String, dynamic>) {
+
+        if (responseBody != null && responseBody is Map<String, dynamic>) {
           setState(() {
             userProfile = UserProfile(
-              name: responseBody['name'],
-              username: responseBody['username'],
-              bio: responseBody['bio'],
-              location: responseBody['location'],
-              discord: responseBody['discordAccount'],
-              age: responseBody['age'],
-              photo: responseBody['photo'],
+              name: responseBody['name'] ?? '',
+              username: responseBody['username'] ?? '',
+              bio: responseBody['bio'] ?? '',
+              location: responseBody['location'] ?? '',
+              discord: responseBody['discordAccount'] ?? '',
+              age: responseBody['age'] ?? 0,
+              photo: responseBody['photo'] ?? '',
             );
           });
         } else {
