@@ -4,6 +4,8 @@ import 'package:projeto/pages/editProfile.dart';
 import 'package:projeto/pages/splashscreen.dart';
 import 'package:projeto/pages/widgets/miniEventCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -35,18 +37,60 @@ class UserProfile {
   });
 }
 
-UserProfile userProfile = UserProfile(
-  name: 'Mark Volt',
-  username: 'mark21',
-  bio: 'Heyo, sou um fã autêntico de Valorant! Crio sempre playlists...',
-  location: '21, Porto',
-  discord: '@mark_21',
-  age: 21,
-  photo:
-      'https://pics.craiyon.com/2023-09-30/03ceca84990a4b33a642d96d88915ae5.webp',
-);
-
 class _ProfileState extends State<Profile> {
+  late UserProfile userProfile; // Inicializa userProfile
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserProfile();
+  }
+
+  Future<void> _fetchUserProfile() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    String apiUrl =
+        'https://sua-api.com/user'; // Substitua pela URL correta da sua API
+
+    try {
+      var response = await http.get(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      print(response);
+
+      if (response.statusCode == 200) {
+        dynamic responseBody = json.decode(response.body);
+        if (responseBody is Map<String, dynamic>) {
+          setState(() {
+            userProfile = UserProfile(
+              name: responseBody['name'],
+              username: responseBody['username'],
+              bio: responseBody['bio'],
+              location: responseBody['location'],
+              discord: responseBody['discordAccount'],
+              age: responseBody['age'],
+              photo: responseBody['photo'],
+            );
+          });
+        } else {
+          print('Unexpected response from API');
+        }
+      } else {
+        print(
+            'Failed to fetch user profile. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (err) {
+      print('Error fetching user profile: $err');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
