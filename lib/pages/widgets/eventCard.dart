@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EventCard extends StatelessWidget {
   final String imageUrl;
   final String eventTitle;
-
   final String dateAndTime;
   final String discordAccount;
   final String gameName;
@@ -19,6 +21,36 @@ class EventCard extends StatelessWidget {
     required this.ageLimit,
     required this.description,
   });
+
+  Future<void> _deleteEvent(BuildContext context, String eventTitle) async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+
+      String apiUrl =
+          'https://backend-q4m5.onrender.com/events/name/$eventTitle';
+
+      var response = await http.delete(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('Event deleted successfully');
+        // Adicione lógica adicional se necessário após a exclusão bem-sucedida
+        Navigator.pop(context); // Navega de volta à tela anterior
+      } else {
+        print('Failed to delete event. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        // Adicione lógica de tratamento de erro conforme necessário
+      }
+    } catch (e) {
+      print('Error deleting event: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -277,8 +309,11 @@ class EventCard extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(16.0),
                       child: ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Subscribe'),
+                        onPressed: () async {
+                          // Substitua 'Nome do Evento' pelo nome real do evento que você deseja excluir
+                          await _deleteEvent(context, 'Nome do Evento');
+                        },
+                        child: Text('Delete'),
                       ),
                     )
                   ],
@@ -308,9 +343,7 @@ class EventCard extends StatelessWidget {
 class EventData {
   final String imageUrl;
   final String eventTitle;
-
   final String dateAndTime;
-
   EventData({
     required this.imageUrl,
     required this.eventTitle,
