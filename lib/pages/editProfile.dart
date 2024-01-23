@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:images_picker/images_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:projeto/pages/widgets/baseWidget.dart';
 import 'package:projeto/pages/widgets/inputText.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -33,6 +34,7 @@ class _EditProfileState extends State<EditProfile> {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.camera,
       Permission.location,
+      Permission.storage,
     ].request();
 
     if (statuses[Permission.camera] == PermissionStatus.denied) {
@@ -41,6 +43,10 @@ class _EditProfileState extends State<EditProfile> {
 
     if (statuses[Permission.location] == PermissionStatus.restricted) {
       // Additional logic to handle location restrictions
+    }
+
+    if (statuses[Permission.storage] == PermissionStatus.denied) {
+      // Additional logic to handle storage permission denial
     }
   }
 
@@ -57,7 +63,7 @@ class _EditProfileState extends State<EditProfile> {
         "age": userAgeController.text,
         "bio": userBioController.text,
         "discordAccount": userDiscordController.text,
-        "photo": userPhotoController,
+        "photo": userPhotoController.text,
         // Add other profile data as needed
       };
 
@@ -72,10 +78,17 @@ class _EditProfileState extends State<EditProfile> {
 
       if (response.statusCode == 200) {
         print('Profile updated successfully');
-        //  Lidar com a atualização bem-sucedida
         // Show a success pop-up
         _showSuccessDialog();
-        Navigator.pop(context);
+
+        // Navigate to the baseWidget (correntIndexPage[3])
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => BaseWidget(
+                    currentPageIndex: 3,
+                  )),
+        );
       } else {
         print('Failed to update profile. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
